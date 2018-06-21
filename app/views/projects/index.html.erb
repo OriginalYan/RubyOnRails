@@ -1,0 +1,55 @@
+<section class="cap">
+  <div class="main-header text-center">
+    <h1>Задачи</h1>
+  </div>
+  <i class="fa fa-plus icons-plus add_task"></i>
+</section>
+
+<div class="container">
+<div class="row">
+    <%= Project.find_each do |project| %>
+      <div class="col-lg-4 col-lg-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1">
+        <%= form_for :todo, url:todo_path do |d| %>
+          <div class="box">
+            <div class="box-wrapper">
+              <h2 class="box-wrapper-header text-left">
+                <%= project.title %>
+              </h2>
+              <hr>
+              <ul>
+                <%= project.todos.find_each do |todo| %>
+                <%= d.check_box :isCompleted, {'class' => "icheck-me", 'data-skin' => "square", 'data-color' => "blue"} %>
+                <!-- <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue"> -->
+                <li><%= todo.text %></li>
+                <%end%>
+              </ul>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    <%end%>
+  </div>
+</div>
+
+
+<div class="form-box">
+  <div class="form-box-wrapper">
+    <div class="form-box-wrapper-content">
+      <div class="main-header-form text-center">
+        <h4>Новая задача</h4>
+      </div>
+      <hr>
+      <%= form_for :todo, url: todos_path , :html => {:id => "form_main"} do |form| %>
+        <%= form.text_field :text, placeholder: 'Название задачи...' %>
+        <br>
+       <%= form.check_box :isCompleted, {:style => "display:none"} %>
+        <%= form.select(:project_id, Project.all.collect{|p| [ p.title, p.id ] }, {include_blank: 'Выберите категорию'} ,{:class => "form-control main-select"})%>
+        <div class="button-container">
+          <%= link_to "ОТМЕНА", root_path, id: "button_cancel" %>
+          <%= link_to "OK", todos_path, id: "button_ok" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
