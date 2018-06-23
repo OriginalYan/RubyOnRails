@@ -9,7 +9,6 @@
 <div class="row">
     <%= Project.find_each do |project| %>
       <div class="col-lg-4 col-lg-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1">
-        <%= form_for :todo, url:todo_path do |d| %>
           <div class="box">
             <div class="box-wrapper">
               <h2 class="box-wrapper-header text-left">
@@ -18,19 +17,22 @@
               <hr>
               <ul>
                 <%= project.todos.find_each do |todo| %>
-                <%= d.check_box :isCompleted, {'class' => "icheck-me", 'data-skin' => "square", 'data-color' => "blue"} %>
-                <!-- <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue"> -->
-                <li><%= todo.text %></li>
+                <%= form_with(model: todo, local: true, id: todo.id) do |form| %>
+                <%= form.check_box :isCompleted, {:checked => todo.isCompleted, :class => "icheck-me check_test", 'data-color' => "blue", 'data-skin' => "square"} %>
+                <%end%>
+                <% if todo.isCompleted? %>
+                  <li style="opacity: 0.5"><strike><%= todo.text %></strike></li>
+                <%else%>
+                  <li><%= todo.text %></li>
+                <%end%>
                 <%end%>
               </ul>
             </div>
           </div>
-        <%end%>
       </div>
     <%end%>
   </div>
 </div>
-
 
 <div class="form-box">
   <div class="form-box-wrapper">

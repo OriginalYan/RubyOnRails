@@ -1,6 +1,6 @@
-Rails.application.routes.draw do
-	root 'projects#index'
+				Rails.application.routes.draw do
+				  resources :projects
+				  resources :todos 
 
-  resources :projects 
-  resources :todos
-end
+				  root 'projects#index'
+				end

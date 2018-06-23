@@ -33,6 +33,14 @@ $(document).ready(function() {
 		});
 	});
 
+	$('.check_test').on('ifUnchecked', function(event) {
+		$(this).parent().parent('form').submit();
+	});
+
+	$('.check_test').on('ifChecked', function(event) {
+		$(this).parent().parent('form').submit();
+	});
+
 	function icheck(){
 	  if($(".icheck-me").length > 0){
 	    $(".icheck-me").each(function(){
@@ -50,5 +58,5 @@ $(document).ready(function() {
 
 	$(function(){
 	  icheck();
-	})
+	});
 });
